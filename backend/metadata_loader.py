@@ -1,34 +1,60 @@
-import csv
-import yaml
+# 📄 metadata_loader.py
+# Loads ERD, schema metadata, and business glossary from the /metadata folder.
+
 import os
+import yaml
+import csv
 
-# 📘 Loads glossary from CSV file located in the metadata/ folder
-def load_glossary(path="metadata/glossary.csv"):
+# Define the relative path to the metadata folder (one level up from backend)
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'metadata'))
+
+def load_erd(path="erd.yaml"):
+    """
+    Loads the Entity Relationship Diagram (ERD) YAML file.
+    Used to understand tables, primary keys, and join relationships.
+    """
+    full_path = os.path.join(BASE_DIR, path)
+    if not os.path.exists(full_path):
+        raise FileNotFoundError(f"ERD file not found: {full_path}")
+
+    with open(full_path, "r") as f:
+        return yaml.safe_load(f)
+
+def load_schema_metadata(path="schema_metadata.yaml"):
+    """
+    Loads optional schema metadata (column-level descriptions).
+    If the file is missing, fallback to an empty dictionary.
+    """
+    full_path = os.path.join(BASE_DIR, path)
+    if not os.path.exists(full_path):
+        print(f"⚠️  Schema metadata file not found at {full_path}. Proceeding with empty metadata.")
+        return {}
+
+    with open(full_path, "r") as f:
+        return yaml.safe_load(f)
+
+def load_glossary(path="glossary.csv"):
+    """
+    Loads the business glossary from CSV.
+    Returns a dictionary keyed by business term for easy lookups.
+    Includes synonyms for mapping natural language queries to schema terms.
+    """
+    full_path = os.path.join(BASE_DIR, path)
+    if not os.path.exists(full_path):
+        raise FileNotFoundError(f"Glossary file not found: {full_path}")
+
     glossary = {}
-    if not os.path.exists(path):
-        raise FileNotFoundError(f"Glossary file not found: {path}")
-
-    with open(path, newline='', encoding='utf-8') as csvfile:
+    with open(full_path, newline="") as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
-            term = row["term"].strip().lower()
-            glossary[term] = {
-                "sql_expression": row["sql_expression"],
-                "notes": row.get("notes", "")
-            }
+            # Ensure required fields exist
+            if all(k in row for k in ["term", "description", "table", "column"]):
+                term = row["term"].strip().lower()
+                glossary[term] = {
+                    "term": term,
+                    "description": row["description"].strip(),
+                    "table": row["table"].strip(),
+                    "column": row["column"].strip(),
+                    "synonyms": [s.strip().lower() for s in row.get("synonyms", "").split(",") if s.strip()]
+                }
     return glossary
-
-# 📘 Loads ERD/schema metadata from YAML (for joins, types, structure)
-def load_schema(path="metadata/erd.yaml"):
-    if not os.path.exists(path):
-        raise FileNotFoundError(f"Schema/ERD file not found: {path}")
-
-    with open(path, 'r', encoding='utf-8') as file:
-        return yaml.safe_load(file)
-
-# ✅ Convenience utility to load both
-def load_metadata():
-    return {
-        "glossary": load_glossary(),
-        "schema": load_schema()
-    }

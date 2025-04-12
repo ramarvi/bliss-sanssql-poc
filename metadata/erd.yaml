@@ -1,0 +1,31 @@
+dim_campaign:
+  primary_key: campaign_id
+  columns:
+    - campaign_id
+    - campaign_name
+    - start_date
+    - end_date
+    - channel
+
+dim_customer:
+  primary_key: customer_id
+  columns:
+    - customer_id
+    - customer_name
+    - email
+    - region
+    - signup_date
+
+fact_message_event:
+  primary_key: message_id
+  columns:
+    - message_id
+    - campaign_id
+    - customer_id
+    - event_type
+    - event_date
+  joins:
+    - table: dim_campaign
+      on: campaign_id
+    - table: dim_customer
+      on: customer_id

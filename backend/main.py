@@ -1,17 +1,30 @@
-# backend/main.py
+# main.py
+
+"""
+🚪 Entry Point – FastAPI App
+----------------------------
+Receives user questions and returns both:
+1. Rule-based SQL (from ERD pattern matching)
+2. LLM-generated SQL (via prompt formatting)
+"""
 
 from fastapi import FastAPI
 from pydantic import BaseModel
 from controller import generate_sql_response
 
-# 🎬 FastAPI app initialization
+# 🚀 Initialize FastAPI app
 app = FastAPI()
 
-# 🧾 Define the expected input format
+# 📝 Request model
 class QueryRequest(BaseModel):
     question: str
 
-# 📤 Endpoint to generate SQL from a natural language question
+# 📡 Endpoint for SQL generation
+@app.get("/")
+def read_root():
+    return {"message": "BLISS backend is up and running 🚀"}
+
+# SQL generation endpoint (main POC endpoint)
 @app.post("/generate_sql")
 def generate_sql(request: QueryRequest):
     return generate_sql_response(request.question)
