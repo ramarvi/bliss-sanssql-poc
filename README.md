@@ -1,6 +1,6 @@
-# 📘 BLISS: Business Language Interface for Self-Serve SQL
+# 📘 BLISS: Business Language Interface for Self-Serve Analytics
 
-A proof-of-concept (PoC) tool that lets business users ask questions in plain English and instantly get SQL queries — powered by an LLM and a lightweight rule engine.
+A proof-of-concept (PoC) tool that lets business users ask questions in plain English and instantly get SQL queries and results — powered by an LLM and a lightweight rule engine.
 
 ---
 
