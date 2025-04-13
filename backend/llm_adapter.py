@@ -51,24 +51,30 @@ def format_prompt(question, erd, glossary, schema_metadata):
 
     # 🧪 Compose the final prompt
     prompt = f"""
-You are a helpful assistant that translates natural language questions into SQL queries.
-
-## Database Schema (ERD):
+You are a precise and reliable assistant that translates business questions into SQL queries.
+    
+## Database Schema (ERD)
 {erd_context}
 
-## Business Glossary:
+## Business Glossary
+Use this glossary to map business terms in the question to the appropriate tables or columns:
 {glossary_context}
 
-## Column Metadata:
+## Column Metadata
+Each table and its columns with data types:
 {schema_context}
+
+## Rules:
+- Only use the tables and columns that exist in the provided schema.
+- If terms in the user question match glossary definitions or column names, use them confidently.
+- Use proper SQL syntax and aliases for clarity.
+- Prefer INNER JOINs unless otherwise implied.
+- Do not explain the query. Only return the SQL code.
 
 ### User Question:
 {question}
 
 ### SQL Query:
-Write a syntactically correct SQL query using the tables and columns provided.
-If a term in the question maps to glossary or schema columns, use them appropriately.
-Return only the SQL code.
 """
 
     return prompt.strip()
