@@ -1,4 +1,4 @@
-# 📘 BLISS: Business Language Interface for Self-Serve Analytics
+# 📘 BLISS Analytics: Business Language Interface for Self-Serve Analytics
 
 A proof-of-concept (PoC) tool that lets business users ask questions in plain English and instantly get SQL queries and results — powered by an LLM and a lightweight rule engine.
 
