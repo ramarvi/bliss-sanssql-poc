@@ -51,7 +51,7 @@ These principles support incremental adoption, low cost, collaborative workflows
 | Rule Engine         | ✅     | ERD-based keyword matching for basic SQL |
 | Controller          | ✅     | Routes question through both engines |
 | SQL Execution       | ✅     | DuckDB backend wired and validated |
-| Output Visualization| 🔲     | Charting & CSV download polishing planned |
+| Output Visualization| ✅     | Charting & CSV download polishing planned |
 | UI (Streamlit)      | ✅     | Clean UX with SQL editing, matching terms, and execution |
 
 ### 🗺️ System Flow
@@ -63,6 +63,13 @@ SQL Validator (sqlglot) →
 DuckDB →
 Results (Preview, CSV Export)
 ```
+  
+---
+
+## 🎥 Demo
+<p align="center">
+  <video src="https://github.com/user-attachments/assets/db039b46-bdb1-4deb-a326-c8fba42e9b5e" width="80%" autoplay loop muted playsinline>
+</video>
 
 ---
 
@@ -77,7 +84,7 @@ Results (Preview, CSV Export)
 | Frontend | ✅     | Display tabular results from backend |
 | Frontend | ✅     | Show matched glossary terms in UI |
 | Frontend | ✅     | Add glossary toggle (full glossary + inline) |
-| Frontend | 🔲     | Add feedback loop (flag incorrect SQL) |
+| Frontend | ✅     | Add feedback loop (flag incorrect SQL) |
 
 ### 📊 Output Features (Planned)
 
