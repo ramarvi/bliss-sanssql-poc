@@ -176,7 +176,8 @@ streamlit run streamlit_app.py
   - Executing queries on DuckDB
   - Previewing results
   - Exporting as CSV (basic)
-- Coming Next:
   - Visualization of results
+- Coming Next:
+  - LLM performance improvements
   - Feedback and explainability improvements
   - Light productionization options 🚀
